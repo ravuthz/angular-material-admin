@@ -27,9 +27,18 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
+### Install Material Dependencies
 ```bash
 npm install --save @angular/cdk
 npm install --save @angular/material 
 npm install --save @angular/animations
 npm install --save @angular/flex-layout
+```
+
+### Create Some Component and A Service
+```bash
+ng g c users
+ng g c posts
+ng g c todos
+ng g s shares/services/json-holder
 ```

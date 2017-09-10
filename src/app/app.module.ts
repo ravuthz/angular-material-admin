@@ -6,13 +6,24 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { AppRouteModule } from './app.route';
 import { AppComponent } from './app.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { PostsComponent } from './posts/posts.component';
+import { UsersComponent } from './users/users.component';
+import { TodosComponent } from './todos/todos.component';
+import { JsonHolderService } from './shares/services/json-holder/json-holder.service';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        DashboardComponent,
+        PostsComponent,
+        UsersComponent,
+        TodosComponent
     ],
     imports: [
+        AppRouteModule,
         BrowserModule,
         FormsModule,
         HttpModule,
@@ -20,7 +31,7 @@ import { AppComponent } from './app.component';
         FlexLayoutModule,
         MaterialModule
     ],
-    providers: [],
+    providers: [JsonHolderService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

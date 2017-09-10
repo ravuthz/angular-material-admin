@@ -1,53 +1,40 @@
-<md-toolbar color="primary">
-    <span>MyCompany</span>
-    <span class="toolbar-spacer"></span>
-    <button md-button [mdMenuTriggerFor]="appMenu"><md-icon>menu</md-icon> Menu</button>
-</md-toolbar>
+<md-sidenav-container fullscreen>
+    <md-sidenav #start>
+        <md-nav-list>
+            <a md-list-item routerLink="/dashboard">Dashboard</a>
+            <a md-list-item routerLink="/users">Users</a>
+            <a md-list-item routerLink="/posts">Posts</a>
+            <a md-list-item routerLink="/todos">Todos</a>
+        </md-nav-list>
+        <hr>
+        <button md-button (click)="start.close()">CLOSE</button>
+    </md-sidenav>
 
-<md-menu #appMenu="mdMenu">
-    <button md-menu-item disabled>
-        <md-icon>fingerprint</md-icon>
-        <span>Login</span>
-    </button>
-    <button md-menu-item>
-        <md-icon>announcement</md-icon>
-        <span>Issues</span>
-    </button>
-    <button md-menu-item>
-        <md-icon>notifications_off</md-icon>
-        <span>Disable alerts</span>
-    </button>
-</md-menu>
+    <md-toolbar color="primary">
+        <button md-icon-button (click)="start.open()">
+            <md-icon>menu</md-icon>
+        </button>
+        <span>MyCompany</span>
+        <span class="toolbar-spacer"></span>
+        <button md-button [mdMenuTriggerFor]="appMenu"><md-icon>menu</md-icon> Menu</button>
+    </md-toolbar>
 
-<md-tab-group>
-    <md-tab label="Post">
-        <md-card class="example-card" *ngFor="let post of posts; let i = index">
-            <md-card-header>
-                <md-card-title>{{ post.title }}</md-card-title>
-            </md-card-header>
-            <md-card-content>
-                <p>{{ post.body }}</p>
-            </md-card-content>
-            <md-card-actions>
-                <button md-button>LIKE</button>
-                <button md-button>SHARE</button>
-            </md-card-actions>
-        </md-card>
-    </md-tab>
-    <md-tab label="Gallery">
-        <md-card class="example-card" *ngFor="let data of (data ? data.slice(0,10): []); let i = index">
-            <img md-card-image src="{{ data.url }}">
-            <md-card-title>Hello</md-card-title>
-            <md-card-header>
-                <md-card-title>{{ data.title }}</md-card-title>
-            </md-card-header>
-            <md-card-actions>
-                <button md-button>LIKE</button>
-                <button md-button>SHARE</button>
-            </md-card-actions>
-        </md-card>
-    </md-tab>
-    <md-tab label="Settings">
-        <p>No Content Yet </p>
-    </md-tab>
-</md-tab-group>
+    <md-menu #appMenu="mdMenu">
+        <button md-menu-item disabled>
+                <md-icon>fingerprint</md-icon>
+                <span>Login</span>
+            </button>
+        <button md-menu-item>
+                <md-icon>announcement</md-icon>
+                <span>Issues</span>
+            </button>
+        <button md-menu-item>
+                <md-icon>notifications_off</md-icon>
+                <span>Disable alerts</span>
+            </button>
+    </md-menu>
+
+    <div class="main-content">
+        <router-outlet></router-outlet>
+    </div>
+</md-sidenav-container>
