@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
@@ -29,7 +30,8 @@ import { JsonHolderService } from './shares/services/json-holder/json-holder.ser
         HttpModule,
         BrowserAnimationsModule,
         FlexLayoutModule,
-        MaterialModule
+        MaterialModule,
+        HttpClientModule
     ],
     providers: [JsonHolderService],
     bootstrap: [AppComponent]
