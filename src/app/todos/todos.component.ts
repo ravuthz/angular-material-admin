@@ -8,7 +8,7 @@ import { JsonHolderService } from '../shares/services/json-holder/json-holder.se
     styleUrls: ['./todos.component.css']
 })
 export class TodosComponent implements OnInit {
-    todos: Array<any>;
+    todos;
 
     constructor(private json: JsonHolderService) { }
 

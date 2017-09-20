@@ -8,7 +8,7 @@ import { Http } from '@angular/http';
     styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
-    posts: Array<any>;
+    posts;
     constructor(private json: JsonHolderService) { }
 
     ngOnInit() {

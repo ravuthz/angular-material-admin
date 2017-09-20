@@ -1,0 +1,6 @@
+{
+    "/api": {
+        "target": "https://spring-boot-moduler.herokuapp.com/api/v1",
+        "secure": true
+    }
+}
