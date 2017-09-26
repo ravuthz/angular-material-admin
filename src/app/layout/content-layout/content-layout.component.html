@@ -1,40 +1,25 @@
 <md-sidenav-container fullscreen>
-    <md-sidenav #start>
+
+    <app-menubar (onMenuClick)="sidebar.toggle()"></app-menubar>
+
+    <md-sidenav #sidebar>
+
         <md-nav-list>
             <a md-list-item routerLink="/dashboard">Dashboard</a>
             <a md-list-item routerLink="/users">Users</a>
             <a md-list-item routerLink="/posts">Posts</a>
             <a md-list-item routerLink="/todos">Todos</a>
         </md-nav-list>
+
         <hr>
-        <button md-button (click)="start.close()">CLOSE</button>
+
+        <button md-button (click)="sidebar.toggle()">CLOSE</button>
+
     </md-sidenav>
 
-    <md-toolbar color="primary">
-        <button md-icon-button (click)="start.open()">
-            <md-icon>menu</md-icon>
-        </button>
-        <span>MyCompany</span>
-        <span class="toolbar-spacer"></span>
-        <button md-button [mdMenuTriggerFor]="appMenu"><md-icon>menu</md-icon> Menu</button>
-    </md-toolbar>
+    <div class="container main-content">
 
-    <md-menu #appMenu="mdMenu">
-        <button md-menu-item disabled>
-                <md-icon>fingerprint</md-icon>
-                <span>Login</span>
-            </button>
-        <button md-menu-item>
-                <md-icon>announcement</md-icon>
-                <span>Issues</span>
-            </button>
-        <button md-menu-item>
-                <md-icon>notifications_off</md-icon>
-                <span>Disable alerts</span>
-            </button>
-    </md-menu>
-
-    <div class="main-content">
         <router-outlet></router-outlet>
     </div>
+
 </md-sidenav-container>

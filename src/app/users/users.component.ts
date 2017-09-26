@@ -1,7 +1,7 @@
-import { Headers } from '@angular/http';
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../shares/services/user.service';
-import { JsonHolderService } from '../shares/services/json-holder/json-holder.service';
+
+import { UserService } from './user.service';
+
 
 @Component({
     selector: 'app-users',
@@ -12,7 +12,6 @@ export class UsersComponent implements OnInit {
     users;
 
     constructor(
-        private jsonService: JsonHolderService,
         private userService: UserService) { }
 
     ngOnInit() {
@@ -20,8 +19,6 @@ export class UsersComponent implements OnInit {
     }
 
     loadUsers() {
-        this.jsonService.getUsers().subscribe(res => this.users = res);
-
         this.userService.getAll().subscribe(res => {
             console.log("res : ", res);
         });

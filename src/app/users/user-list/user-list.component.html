@@ -1,0 +1,97 @@
+<div class="button-row" fxLayout="row" fxLayoutAlign="space-between stretch">
+    <div fxFlex="80">
+        <button md-raised-button color="primary" (click)="onCreateClick()">
+            <md-icon class="md-24">add</md-icon>
+        </button>
+    </div>
+    <div fxFlex>
+        <app-single-search (onSearchChange)="onSearchChange($event)"></app-single-search>
+    </div>
+</div>
+
+<md-list class="user-list">
+    <md-list-item *ngFor="let user of users">
+        <img mdListAvatar src="assets/images/profile-pictures.png" alt="profile-pictures.png">
+        <h3 mdLine>
+            <a [routerLink]="['/users', user.id]">{{ user.username | uppercase }}</a>
+        </h3>
+        <div mdLine flexLayout="row">
+            <div fxFlex="90">
+                <span> {{ user.firstName + ' ' + user.lastName }} </span>
+                <span> -- {{ user.email }} </span>
+            </div>
+            <div fxFlex class="text-right">
+                <button md-icon-button color="primary" (click)="onModifyClick(user)">
+                    <md-icon>create</md-icon>
+                </button>
+                <button md-icon-button color="accent" (click)="onDeleteClick(user)">
+                    <md-icon>delete</md-icon>
+                </button>
+            </div>
+        </div>
+    </md-list-item>
+</md-list>
+
+<div class="example-container mat-elevation-z8">
+    <md-table #table [dataSource]="dataSource" mdSort>
+
+        <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- ID Column -->
+        <ng-container mdColumnDef="id">
+            <md-header-cell *mdHeaderCellDef md-sort-header> ID </md-header-cell>
+            <md-cell *mdCellDef="let row"> {{row.id}} </md-cell>
+        </ng-container>
+
+        <!-- Username Column -->
+        <ng-container mdColumnDef="username">
+            <md-header-cell *mdHeaderCellDef md-sort-header> Username </md-header-cell>
+            <md-cell *mdCellDef="let row"> {{row.username}}% </md-cell>
+        </ng-container>
+
+        <!-- First Name Column -->
+        <ng-container mdColumnDef="firstName">
+            <md-header-cell *mdHeaderCellDef md-sort-header> First Name </md-header-cell>
+            <md-cell *mdCellDef="let row"> {{row.firstName}} </md-cell>
+        </ng-container>
+
+        <!-- Last Name Column -->
+        <ng-container mdColumnDef="lastName">
+            <md-header-cell *mdHeaderCellDef md-sort-header> Last Name </md-header-cell>
+            <md-cell *mdCellDef="let row"> {{row.lastName}} </md-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container mdColumnDef="email">
+            <md-header-cell *mdHeaderCellDef md-sort-header> Email </md-header-cell>
+            <md-cell *mdCellDef="let row"> {{row.email}} </md-cell>
+        </ng-container>
+
+        <md-header-row *mdHeaderRowDef="displayColumns"></md-header-row>
+        <md-row *mdRowDef="let row; columns: displayColumns;"></md-row>
+    </md-table>
+</div>
+
+<!-- <table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Enabled</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.enabled }}</td>
+        </tr>
+    </tbody>
+</table> -->
