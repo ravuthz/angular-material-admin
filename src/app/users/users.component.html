@@ -1,11 +1,10 @@
-<md-card class="example-card" *ngFor="let user of users; let i = index">
+<md-card>
     <md-card-header>
-        <md-card-title>{{ user.name }}</md-card-title>
+        <md-card-title>
+            <h3>User Listing</h3>
+        </md-card-title>
     </md-card-header>
     <md-card-content>
-        <ul>
-            <li>Username: {{ user.username }}</li>
-            <li>Email Address: {{ user.email }}</li>
-        </ul>
+        <app-user-list></app-user-list>
     </md-card-content>
 </md-card>

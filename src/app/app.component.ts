@@ -1,5 +1,3 @@
-import 'rxjs/add/operator/map';
-
 import { Component } from '@angular/core';
 
 @Component({

@@ -9,7 +9,6 @@ import { ContentLayoutComponent } from './layout/content-layout/content-layout.c
 import { PageLayoutComponent } from './layout/page-layout/page-layout.component';
 import { PostsComponent } from './posts/posts.component';
 import { UNAUTHORIZE } from './shares/consts/auth.const';
-import { AuthGuardService } from './shares/guards/auth-guard.service';
 import { TodosComponent } from './todos/todos.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { UsersComponent } from './users/users.component';
@@ -36,7 +35,7 @@ export const routes: Routes = [
     {
         path: '',
         component: ContentLayoutComponent,
-        canActivate: [AuthGuardService],
+        // canActivate: [AuthGuardService],
         children: [
             {
                 path: 'dashboard',

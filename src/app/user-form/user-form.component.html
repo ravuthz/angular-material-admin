@@ -1,0 +1,36 @@
+<h2 md-dialog-title>{{ data.formTitle }}</h2>
+<md-dialog-content>
+    <form class="user-form" [formGroup]="form" novalidate>
+
+        <md-form-field class="input-full-width">
+            <input mdInput placeholder="Email" formControlName="email">
+            <md-error>{{ controlGetError('email') }}</md-error>
+        </md-form-field>
+
+        <md-form-field class="input-full-width">
+            <input mdInput placeholder="Username" formControlName="username">
+            <md-error>{{ controlGetError('username') }}</md-error>
+        </md-form-field>
+
+        <md-form-field class="input-full-width">
+            <input mdInput type="password" placeholder="Password" formControlName="password">
+            <md-error>{{ controlGetError('password') }}</md-error>
+        </md-form-field>
+
+        <md-form-field class="input-full-width">
+            <input mdInput placeholder="First Name" formControlName="firstName">
+            <md-error>{{ controlGetError('firstName') }}</md-error>
+        </md-form-field>
+
+        <md-form-field class="input-full-width">
+            <input mdInput placeholder="Last Name" formControlName="lastName">
+            <md-error>{{ controlGetError('lastName') }}</md-error>
+        </md-form-field>
+
+    </form>
+</md-dialog-content>
+<md-dialog-actions>
+    <button md-raised-button (click)="onFormSave()" tabindex="1" color="primary">Save</button>
+    <button md-raised-button (click)="onFormReset()" tabindex="1">Reset</button>
+    <button md-raised-button (click)="onFormCancel()" tabindex="1">Cancel</button>
+</md-dialog-actions>

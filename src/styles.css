@@ -14,12 +14,6 @@ body {
     margin: 20px auto;
 }
 
-.example-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-}
-
-.example-full-width {
+.input-full-width {
     width: 100%;
 }
