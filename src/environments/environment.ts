@@ -4,5 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+    production: false,
+    apiEntPoint: 'http://localhost:8080/rest/api'
+    // apiEntPoint: 'https://spring-boot-moduler.herokuapp.com/rest/api'
 };

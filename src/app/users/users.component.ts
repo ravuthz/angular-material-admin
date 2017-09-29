@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { JsonHolderService } from '../shares/services/json-holder/json-holder.service';
+import { UserService } from './user.service';
+
 
 @Component({
     selector: 'app-users',
@@ -8,15 +9,18 @@ import { JsonHolderService } from '../shares/services/json-holder/json-holder.se
     styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-    users: Array<any>;
+    users;
 
-    constructor(private json: JsonHolderService) { }
+    constructor(
+        private userService: UserService) { }
 
     ngOnInit() {
         this.loadUsers();
     }
 
     loadUsers() {
-        this.json.getUsers().subscribe(res => this.users = res);
+        this.userService.getAll().subscribe(res => {
+            console.log("res : ", res);
+        });
     }
 }

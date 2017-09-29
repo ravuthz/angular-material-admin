@@ -1,39 +1,45 @@
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppRouteModule } from './app.route';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app.routing';
+import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PostsComponent } from './posts/posts.component';
-import { UsersComponent } from './users/users.component';
-import { TodosComponent } from './todos/todos.component';
-import { JsonHolderService } from './shares/services/json-holder/json-holder.service';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
+import { MenubarComponent } from './layout/menubar/menubar.component';
+import { PageLayoutComponent } from './layout/page-layout/page-layout.component';
+import { SharedModule } from './shared/shared.module';
+import { UserFormComponent } from './users/user-form/user-form.component';
+import { UserService } from './users/user.service';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
     declarations: [
         AppComponent,
+        MenubarComponent,
         DashboardComponent,
-        PostsComponent,
-        UsersComponent,
-        TodosComponent
+        PageLayoutComponent,
+        ContentLayoutComponent,
+        NotFoundComponent
     ],
     imports: [
-        AppRouteModule,
         BrowserModule,
-        FormsModule,
-        HttpModule,
         BrowserAnimationsModule,
-        FlexLayoutModule,
-        MaterialModule,
-        HttpClientModule
+        AppRoutingModule,
+        SharedModule,
+        UsersModule,
+        AuthModule
     ],
-    providers: [JsonHolderService],
+    providers: [
+        AuthService,
+        UserService
+    ],
+    entryComponents: [
+        UserFormComponent
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

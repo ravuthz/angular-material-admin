@@ -1,0 +1,36 @@
+<div class="button-row" fxLayout="row" fxLayoutAlign="space-between stretch">
+    <div fxFlex="80">
+        <button md-raised-button color="primary" (click)="onCreateClick(user)">
+            <md-icon class="md-24">add</md-icon>
+        </button>
+    </div>
+    <div fxFlex>
+        <app-single-search (onSearchChange)="onSearchChange($event)"></app-single-search>
+    </div>
+</div>
+
+<md-list class="user-list">
+    <md-list-item *ngFor="let user of users">
+        <img mdListAvatar src="assets/images/profile-pictures.png" alt="profile-pictures.png">
+        <h3 mdLine>
+            <a [routerLink]="['/users', user.id]">{{ user.username | uppercase }}</a>
+        </h3>
+        <div mdLine flexLayout="row">
+            <div fxFlex="90">
+                <span> {{ user.firstName + ' ' + user.lastName }} </span>
+                <span> -- {{ user.email }} </span>
+            </div>
+            <div fxFlex class="text-right">
+                <button md-icon-button color="primary" (click)="onModifyClick(user)">
+                    <md-icon>create</md-icon>
+                </button>
+                <button md-icon-button color="accent" (click)="onDeleteClick(user)">
+                    <md-icon>delete</md-icon>
+                </button>
+            </div>
+        </div>
+    </md-list-item>
+
+    <app-simple-pager [pager]="pager" (onPageChange)="onPageChange($event)"></app-simple-pager>
+
+</md-list>

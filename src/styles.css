@@ -8,3 +8,16 @@ body {
 .red-color {
     color: red;
 }
+
+.container {
+    width: 90%;
+    margin: 20px auto;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+.text-right {
+    text-align: right;
+}

@@ -1,8 +1,0 @@
-<md-card class="example-card" *ngFor="let todo of todos; let i = index">
-    <md-card-content>
-        <h3>{{ todo.title }}</h3>
-        <button md-button (click)="doneTodo(i)">
-            <md-icon [class.red-color]="todo.completed">favorite</md-icon> Done
-        </button>
-    </md-card-content>
-</md-card>

@@ -1,0 +1,25 @@
+<md-sidenav-container fullscreen>
+
+    <app-menubar (onMenuClick)="sidebar.toggle()"></app-menubar>
+
+    <md-sidenav #sidebar>
+
+        <md-nav-list>
+            <a md-list-item routerLink="/dashboard">Dashboard</a>
+            <a md-list-item routerLink="/users">Users</a>
+            <a md-list-item routerLink="/posts">Posts</a>
+            <a md-list-item routerLink="/todos">Todos</a>
+        </md-nav-list>
+
+        <hr>
+
+        <button md-button (click)="sidebar.toggle()">CLOSE</button>
+
+    </md-sidenav>
+
+    <div class="container main-content">
+
+        <router-outlet></router-outlet>
+    </div>
+
+</md-sidenav-container>
