@@ -1,36 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-export const DEFAULT_PAGE = 0;
-export const DEFAULT_SIZE = 5;
-export const DEFAULT_SORT = 'id,asc';
-
-export class PagerRequest {
-    public page: number;
-    public size: number;
-    public sort: string;
-
-    constructor() {
-        this.page = DEFAULT_PAGE;
-        this.size = DEFAULT_SIZE;
-        this.sort = DEFAULT_SORT;
-    }
-}
-
-export class PagerResponse {
-    public sort: string;
-    public size: number;
-    public number: number;
-    public totalPages: number;
-    public totalElements: number;
-
-    constructor() {
-        this.sort = DEFAULT_SORT;
-        this.size = DEFAULT_SIZE;
-        this.number = DEFAULT_PAGE;
-        this.totalPages = 0;
-        this.totalElements = 0;
-    }
-}
+import { PagerResponse } from '../classes/requests-respones';
 
 @Component({
     selector: 'app-simple-pager',

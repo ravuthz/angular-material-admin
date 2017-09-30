@@ -1,4 +1,4 @@
-import { PagerResponse } from '../components/simple-pager.component';
+import { PagerResponse } from './requests-respones';
 
 export abstract class BaseList {
 

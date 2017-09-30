@@ -1,11 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-export class SearchRequest {
-    public name: string;
-    public code: string;
-}
-
 @Component({
     selector: 'app-single-search',
     template: `
