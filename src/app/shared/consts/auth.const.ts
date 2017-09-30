@@ -7,5 +7,5 @@ export const TOKEN_KEY = 'token';
 export const EMAIL_KEY = 'email';
 export const USERNAME_KEY = 'username';
 
-export const TOKEN_AUTH_USERNAME = '';
-export const TOKEN_AUTH_PASSWORD = '';
+export const TOKEN_AUTH_USERNAME = 'trusted-app';
+export const TOKEN_AUTH_PASSWORD = 'secret';

@@ -26,11 +26,14 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    formSubmit(model: Credentials, isValid: boolean) {
-        if (isValid) {
-            // this.authService.loginWithCredentials(model);
-            this.authService.loginWithUsernamePassword(model.email, model.password);
-        }
+    formSubmit(model: Credentials, isValid: boolean, event) {
+        event.preventDefault();
+        console.log("formSubmit");
+        // if (isValid) {
+        // this.authService.loginWithCredentials(model);
+        // this.authService.loginWithUsernamePassword("adminz", "123123");
+        this.authService.jwtLogin("adminz", "123123").subscribe(res => console.log(res));
+        // }
     }
 
 }

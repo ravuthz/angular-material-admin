@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { MaterialModule, MD_ERROR_GLOBAL_OPTIONS, MdDialogModule } from '@angular/material';
 
 import { SimplePagerComponent } from './components/simple-pager.component';
@@ -14,6 +15,7 @@ import { StorageService } from './services/storage.service';
 
 @NgModule({
     imports: [
+        HttpModule,
         CommonModule,
         FlexLayoutModule,
         HttpClientModule,
@@ -23,6 +25,7 @@ import { StorageService } from './services/storage.service';
         ReactiveFormsModule
     ],
     exports: [
+        HttpModule,
         CommonModule,
         FlexLayoutModule,
         HttpClientModule,

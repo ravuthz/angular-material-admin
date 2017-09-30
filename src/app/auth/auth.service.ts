@@ -1,12 +1,13 @@
+import 'rxjs';
+
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Headers, Http } from '@angular/http';
 import { Router } from '@angular/router';
 
-import { environment } from '../../environments/environment';
 import {
     EMAIL_KEY,
     LOGIN_FAILURE,
-    LOGIN_SUCCESS,
     TOKEN_AUTH_PASSWORD,
     TOKEN_AUTH_USERNAME,
     TOKEN_KEY,
@@ -27,23 +28,51 @@ export interface Credentials {
 @Injectable()
 export class AuthService {
 
+    static AUTH_TOKEN = '/oauth/token';
+
     private error = '';
     private headers = new HttpHeaders();
     private link: string;
 
     constructor(
         private router: Router,
+        private auth: Http,
         private http: HttpClient,
         private storage: StorageService) {
         this.headers.append('Content-Type', 'application/json');
 
-        this.link = environment.apiEntPoint + '/oauth/token';
+        // this.link = environment.apiEntPoint + '/oauth/token';
+
+        this.link = 'http://localhost:8080/auth/token';
+    }
+
+    jwtLogin(username: string, password: string) {
+        // const body = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&grant_type=password`;
+        const body = `grant_type=client_credentials`;
+        const headers = new Headers();
+        headers.append('Access-Control-Allow-Origin', '*');
+        // headers.append('Content-Type', 'application/json;charset=UTF-8');
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        headers.append('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD));
+
+        return this.auth.post(this.link, body, { headers })
+            .map(res => res.json())
+            .map((res: any) => {
+                console.log("jwtLogin", res);
+                if (res.access_token) {
+                    return res.access_token;
+                }
+                return null;
+            });
     }
 
     login(data) {
         let headers = new HttpHeaders();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         headers.append('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD));
+
+        console.log("login(data): ", data);
+        console.log("headers : ", headers);
 
         return this.http.post(this.link, data, { headers })
             .subscribe(res => {
@@ -53,10 +82,10 @@ export class AuthService {
                 this.storage.auth = res;
                 console.log('login res: ', res);
                 if (res['token']) {
-                    this.router.navigate([LOGIN_SUCCESS]);
+                    // this.router.navigate([LOGIN_SUCCESS]);
                 } else {
                     this.error = 'Username or Password is incorrect.';
-                    this.router.navigate([LOGIN_FAILURE]);
+                    // this.router.navigate([LOGIN_FAILURE]);
                 }
             }, err => {
                 console.log('login err: ', err);

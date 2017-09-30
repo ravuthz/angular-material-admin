@@ -1,4 +1,4 @@
-<form class="example-form" novalidate [formGroup]="form" (submit)="formSubmit(form.value, form.valid)">
+<form class="example-form" novalidate [formGroup]="form" (submit)="formSubmit(form.value, form.valid, $event)">
     <md-form-field class="example-full-width">
         <input mdInput placeholder="Email" formControlName="email">
     </md-form-field>
