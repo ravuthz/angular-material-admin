@@ -2,17 +2,10 @@ import 'rxjs';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 
-import {
-    EMAIL_KEY,
-    LOGIN_FAILURE,
-    TOKEN_AUTH_PASSWORD,
-    TOKEN_AUTH_USERNAME,
-    TOKEN_KEY,
-    USERNAME_KEY,
-} from '../shared/consts/auth.const';
+import { EMAIL_KEY, TOKEN_AUTH_PASSWORD, TOKEN_AUTH_USERNAME, TOKEN_KEY, USERNAME_KEY } from '../shared/consts/auth.const';
 import { StorageService } from '../shared/services/storage.service';
 
 export interface Client {
@@ -43,54 +36,69 @@ export class AuthService {
 
         // this.link = environment.apiEntPoint + '/oauth/token';
 
-        this.link = 'http://localhost:8080/auth/token';
+        this.link = 'http://localhost:8080/oauth/token';
     }
 
     jwtLogin(username: string, password: string) {
-        // const body = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&grant_type=password`;
-        const body = `grant_type=client_credentials`;
+        // const body = `?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&grant_type=password`;
+        // const body = `grant_type=client_credentials`;
         const headers = new Headers();
-        headers.append('Access-Control-Allow-Origin', '*');
+        // headers.append('Access-Control-Allow-Origin', '*');
         // headers.append('Content-Type', 'application/json;charset=UTF-8');
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         headers.append('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD));
 
-        return this.auth.post(this.link, body, { headers })
+        // const body = {
+        //     grant_type: 'password',
+        //     username: 'adminz',
+        //     password: '123123'
+        // };
+
+        let params: URLSearchParams = new URLSearchParams();
+        params.set('grant_type', 'password');
+        params.set('username', 'adminz');
+        params.set('password', '123123');
+        params.set('client_id', TOKEN_AUTH_USERNAME);
+        params.set('client_secret', TOKEN_AUTH_PASSWORD);
+
+        let options = new RequestOptions({ headers: headers, withCredentials: true });
+
+        return this.auth.post(this.link, params.toString(), options)
+            // return this.auth.post(this.link + body, {}, options)
             .map(res => res.json())
             .map((res: any) => {
-                console.log("jwtLogin", res);
+                console.log("jwtLogin res: ", res);
                 if (res.access_token) {
                     return res.access_token;
                 }
                 return null;
+            }, (err: any) => {
+                console.log("jwtLogin err: ", err);
             });
     }
 
     login(data) {
         let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         headers.append('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD));
 
         console.log("login(data): ", data);
-        console.log("headers : ", headers);
 
-        return this.http.post(this.link, data, { headers })
+        return this.http.post(this.link, data, { headers: headers, withCredentials: true })
+            // return this.http.post(this.link, data, { headers })
             .subscribe(res => {
-                this.storage.set(TOKEN_KEY, res['token']);
-                this.storage.set(EMAIL_KEY, res['email']);
-                this.storage.set(USERNAME_KEY, res['username']);
-                this.storage.auth = res;
-                console.log('login res: ', res);
-                if (res['token']) {
-                    // this.router.navigate([LOGIN_SUCCESS]);
-                } else {
-                    this.error = 'Username or Password is incorrect.';
-                    // this.router.navigate([LOGIN_FAILURE]);
-                }
-            }, err => {
-                console.log('login err: ', err);
-                this.error = err.text();
-                this.router.navigate([LOGIN_FAILURE]);
+                console.log("res ", res);
+                // this.storage.set(TOKEN_KEY, res['token']);
+                // this.storage.set(EMAIL_KEY, res['email']);
+                // this.storage.set(USERNAME_KEY, res['username']);
+                // this.storage.auth = res;
+                // console.log('login res: ', res);
+                // if (res['token']) {
+                //     // this.router.navigate([LOGIN_SUCCESS]);
+                // } else {
+                //     this.error = 'Username or Password is incorrect.';
+                //     // this.router.navigate([LOGIN_FAILURE]);
+                // }
             });
     }
 
