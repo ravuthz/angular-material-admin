@@ -48,11 +48,13 @@ export class AuthService {
         headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         headers.append('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD));
 
-        // const body = {
-        //     grant_type: 'password',
-        //     username: 'adminz',
-        //     password: '123123'
-        // };
+        const body = {
+            grant_type: 'password',
+            username: 'adminz',
+            password: '123123',
+            client_id: TOKEN_AUTH_USERNAME,
+            client_secret: TOKEN_AUTH_PASSWORD
+        };
 
         let params: URLSearchParams = new URLSearchParams();
         params.set('grant_type', 'password');
@@ -63,28 +65,41 @@ export class AuthService {
 
         let options = new RequestOptions({ headers: headers, withCredentials: true });
 
-        return this.auth.post(this.link, params.toString(), options)
-            // return this.auth.post(this.link + body, {}, options)
-            .map(res => res.json())
-            .map((res: any) => {
-                console.log("jwtLogin res: ", res);
-                if (res.access_token) {
-                    return res.access_token;
-                }
-                return null;
-            }, (err: any) => {
-                console.log("jwtLogin err: ", err);
-            });
+        return this.auth.post(this.link, body, options).subscribe(res => console.log("res: ", res));
+        // return this.auth.post(this.link + body, {}, options)
+        // .map(res => res.json())
+        // .map((res: any) => {
+        //     console.log("jwtLogin res: ", res);
+        //     if (res.access_token) {
+        //         return res.access_token;
+        //     }
+        //     return null;
+        // }, (err: any) => {
+        //     console.log("jwtLogin err: ", err);
+        // });
     }
 
     login(data) {
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        headers.append('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD));
+
+        let withCredentials = true;
+        let headers = new HttpHeaders({
+            'Authorization': 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD)
+        });
+
+        let params = {
+            grant_type: 'password',
+            username: 'adminz',
+            password: '123123',
+            client_id: 'trusted-app',
+            client_secret: 'secret'
+        };
+
+        // headers.set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+        // headers.set('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD));
 
         console.log("login(data): ", data);
 
-        return this.http.post(this.link, data, { headers: headers, withCredentials: true })
+        return this.http.post(this.link, JSON.stringify(params), { headers })
             // return this.http.post(this.link, data, { headers })
             .subscribe(res => {
                 console.log("res ", res);

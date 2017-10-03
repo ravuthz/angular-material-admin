@@ -2,6 +2,6 @@
     "/api": {
         // "target": "https://spring-boot-moduler.herokuapp.com/rest/api",
         "target": "http://localhost:8080/rest/api",
-        "secure": true
+        "secure": false
     }
 }

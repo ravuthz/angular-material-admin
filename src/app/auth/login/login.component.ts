@@ -32,8 +32,8 @@ export class LoginComponent implements OnInit {
         // if (isValid) {
         // this.authService.loginWithCredentials(model);
         // this.authService.loginWithUsernamePassword("adminz", "123123");
-        // this.authService.jwtLogin("adminz", "123123").subscribe(res => console.log(res));
-        this.authService.loginWithUsernamePassword("adminz", "123123");
+        this.authService.jwtLogin("adminz", "123123");
+        // this.authService.loginWithUsernamePassword("adminz", "123123");
         // }
     }
 
