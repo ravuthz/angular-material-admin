@@ -1,7 +1,7 @@
 export class QueryParams {
     private data;
 
-    constructor(data: Object) {
+    constructor(data: any) {
         this.data = data;
     }
 

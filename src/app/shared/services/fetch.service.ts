@@ -14,7 +14,7 @@ export class FetchService {
     constructor(public http: HttpClient) { }
 
     set link(suffex) {
-        this._link = environment.apiEntPoint + suffex;
+        this._link = environment.apiUrl + suffex;
     }
 
     get link() {
@@ -22,7 +22,7 @@ export class FetchService {
     }
 
     set searchLink(suffex) {
-        this._searchLink = environment.apiEntPoint + suffex;
+        this._searchLink = environment.apiUrl + suffex;
     }
 
     get searchLink() {

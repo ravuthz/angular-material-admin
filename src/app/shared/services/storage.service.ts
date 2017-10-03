@@ -5,14 +5,6 @@ export class StorageService {
 
     constructor() { }
 
-    get auth() {
-        return this.get('auth');
-    }
-
-    set auth(value) {
-        this.set('auth', value);
-    }
-
     public get(key) {
         if (localStorage.getItem(key)) {
             let value = localStorage.getItem(key);

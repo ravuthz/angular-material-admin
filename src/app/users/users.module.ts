@@ -22,6 +22,6 @@ import { UsersComponent } from './users/users.component';
         UserListComponent,
         UserFormComponent,
         UserShowComponent
-    ]
+    ],
 })
 export class UsersModule { }

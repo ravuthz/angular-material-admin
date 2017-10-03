@@ -1,172 +1,113 @@
-import 'rxjs';
-
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import {
+    HttpClient,
+    HttpErrorResponse,
+    HttpEvent,
+    HttpHandler,
+    HttpHeaders,
+    HttpInterceptor,
+    HttpRequest,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Headers, Http, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/observable';
 
-import { EMAIL_KEY, TOKEN_AUTH_PASSWORD, TOKEN_AUTH_USERNAME, TOKEN_KEY, USERNAME_KEY } from '../shared/consts/auth.const';
+import { environment } from '../../environments/environment';
+import { QueryParams } from '../shared/classes/query-params';
+import {
+    LOGIN_PATH,
+    LOGIN_SUCCESS_PATH,
+    TOKEN_AUTH_PASSWORD,
+    TOKEN_AUTH_USERNAME,
+    TOKEN_KEY,
+} from '../shared/consts/auth.const';
+import { GRANT_TYPE_CLIENT_CREDENTIALS, GRANT_TYPE_PASSWORD } from '../shared/consts/auth.const';
 import { StorageService } from '../shared/services/storage.service';
 
-export interface Client {
-    clientId: string,
-    clientSecret: string
-}
+@Injectable()
+export class OAuthInterceptor implements HttpInterceptor {
 
-export interface Credentials {
-    email: string,
-    password: string
+    public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        let credentials = 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD);
+        const request = req.clone({
+            headers: req.headers.set('Authorization', credentials)
+        });
+        console.log("OAuthInterceptor - HttpRequest: ", request);
+        return next.handle(request);
+    }
+
 }
 
 @Injectable()
 export class AuthService {
-
-    static AUTH_TOKEN = '/oauth/token';
-
-    private error = '';
+    private link: string = '';
+    private error: string = '';
     private headers = new HttpHeaders();
-    private link: string;
 
     constructor(
         private router: Router,
-        private auth: Http,
         private http: HttpClient,
         private storage: StorageService) {
-        this.headers.append('Content-Type', 'application/json');
-
-        // this.link = environment.apiEntPoint + '/oauth/token';
-
-        this.link = 'http://localhost:8080/oauth/token';
+        this.link = environment.oauthUrl;
     }
 
-    jwtLogin(username: string, password: string) {
-        // const body = `?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&grant_type=password`;
-        // const body = `grant_type=client_credentials`;
-        const headers = new Headers();
-        // headers.append('Access-Control-Allow-Origin', '*');
-        // headers.append('Content-Type', 'application/json;charset=UTF-8');
-        headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        headers.append('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD));
-
-        const body = {
-            grant_type: 'password',
-            username: 'adminz',
-            password: '123123',
-            client_id: TOKEN_AUTH_USERNAME,
-            client_secret: TOKEN_AUTH_PASSWORD
-        };
-
-        let params: URLSearchParams = new URLSearchParams();
-        params.set('grant_type', 'password');
-        params.set('username', 'adminz');
-        params.set('password', '123123');
-        params.set('client_id', TOKEN_AUTH_USERNAME);
-        params.set('client_secret', TOKEN_AUTH_PASSWORD);
-
-        let options = new RequestOptions({ headers: headers, withCredentials: true });
-
-        return this.auth.post(this.link, body, options).subscribe(res => console.log("res: ", res));
-        // return this.auth.post(this.link + body, {}, options)
-        // .map(res => res.json())
-        // .map((res: any) => {
-        //     console.log("jwtLogin res: ", res);
-        //     if (res.access_token) {
-        //         return res.access_token;
-        //     }
-        //     return null;
-        // }, (err: any) => {
-        //     console.log("jwtLogin err: ", err);
-        // });
-    }
-
-    login(data) {
-
-        let withCredentials = true;
-        let headers = new HttpHeaders({
-            'Authorization': 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD)
-        });
-
-        let params = {
-            grant_type: 'password',
-            username: 'adminz',
-            password: '123123',
-            client_id: 'trusted-app',
-            client_secret: 'secret'
-        };
-
-        // headers.set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-        // headers.set('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD));
-
-        console.log("login(data): ", data);
-
-        return this.http.post(this.link, JSON.stringify(params), { headers })
-            // return this.http.post(this.link, data, { headers })
+    public httpLogin(data) {
+        let query = new QueryParams(data);
+        console.info("AuthService - httpLogin");
+        return this.http.post(this.link + query, null)
             .subscribe(res => {
-                console.log("res ", res);
-                // this.storage.set(TOKEN_KEY, res['token']);
-                // this.storage.set(EMAIL_KEY, res['email']);
-                // this.storage.set(USERNAME_KEY, res['username']);
-                // this.storage.auth = res;
-                // console.log('login res: ', res);
-                // if (res['token']) {
-                //     // this.router.navigate([LOGIN_SUCCESS]);
-                // } else {
-                //     this.error = 'Username or Password is incorrect.';
-                //     // this.router.navigate([LOGIN_FAILURE]);
-                // }
+                console.log("httpLogin - Login Success", res);
+                this.storage.set(TOKEN_KEY, res['access_token']);
+                this.router.navigateByUrl(LOGIN_SUCCESS_PATH);
+            }, (err: HttpErrorResponse) => {
+                if (err.error instanceof Error) {
+                    console.log("httpLogin - Client-side Error Occured: \n", err.error);
+                } else {
+                    console.log("httpLogin - Server-side Error Occured: \n", err.error);
+                }
+                this.storage.remove(TOKEN_KEY);
             });
     }
 
-    loginWithCredentials(credentials: Credentials) {
-        return this.login(credentials);
+    public login(username: string, password: string, grant_type = GRANT_TYPE_PASSWORD) {
+        return this.httpLogin({ username, password, grant_type });
     }
 
-    loginWithEmailPassword(email: string, password: string) {
-        return this.login({
-            email: email,
-            password: password,
-            grant_type: 'password'
-        });
+    public loginWithCleint(client_id, cleint_secret) {
+        return this.httpLogin({ client_id, cleint_secret, grant_type: GRANT_TYPE_CLIENT_CREDENTIALS });
     }
 
-    loginWithUsernamePassword(username: string, password: string) {
-        return this.login({
-            username: username,
-            password: password,
-            grant_type: 'password'
-        });
-    }
-
-    loginWithCleintCredentials(client: Client) {
-        let params = new HttpParams();
-        params.set('grant_type', 'client_credentials');
-        params.set('client_id', client.clientId);
-        params.set('cleint_secret', client.clientSecret);
-        return this.http.post(this.link, {}, { params, headers: this.headers });
-    }
-
-    isUser(): boolean {
-        return this.isLoggedIn();
-    }
-
-    isAdmin(): boolean {
-        return this.isLoggedIn();
-    }
-
-    isLoggedIn(): boolean {
+    public isLoggedIn(): boolean {
         let token = this.getToken();
         return token && token.length > 0;
     }
 
-    getToken() {
+    public checkCredentials() {
+        if (!this.isLoggedIn()) {
+            this.router.navigateByUrl(LOGIN_PATH);
+        }
+    }
+
+    public isUser(): boolean {
+        return this.isLoggedIn();
+    }
+
+    public isAdmin(): boolean {
+        return this.isLoggedIn();
+    }
+
+    public getToken() {
         return this.storage.get(TOKEN_KEY);
     }
 
-    logout() {
+    public logout() {
+        console.info("AuthService - logout");
         this.storage.remove(TOKEN_KEY);
-        this.storage.remove(EMAIL_KEY);
-        this.storage.remove(USERNAME_KEY);
-        this.storage.auth = null;
+        this.router.navigateByUrl(LOGIN_PATH);
+    }
+
+    public register(user) {
+        console.info("AuthService - register");
+
     }
 
 }

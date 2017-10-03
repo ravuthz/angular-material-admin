@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { AuthService, Credentials } from '../auth.service';
+import { AuthService } from '../auth.service';
 
 @Component({
     selector: 'app-login',
@@ -21,20 +21,16 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.builder.group({
-            email: ['adminz@gmail.com', [Validators.required, Validators.email]],
+            username: ['adminz', [Validators.required]],
             password: ['123123', [Validators.required]]
         });
     }
 
-    formSubmit(model: Credentials, isValid: boolean, event) {
+    formSubmit(model, isValid: boolean, event) {
         event.preventDefault();
         console.log("formSubmit");
-        // if (isValid) {
-        // this.authService.loginWithCredentials(model);
-        // this.authService.loginWithUsernamePassword("adminz", "123123");
-        this.authService.jwtLogin("adminz", "123123");
-        // this.authService.loginWithUsernamePassword("adminz", "123123");
-        // }
+
+        this.authService.login(model.username, model.password);
     }
 
 }
