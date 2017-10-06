@@ -30,7 +30,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(new AuthConfig({
         tokenName: TOKEN_NAME,
         globalHeaders: [{ 'Content-Type': 'application/json' }],
-        noJwtError: false,
+        noJwtError: true,
         noTokenScheme: true,
         tokenGetter: (() => localStorage.getItem(TOKEN_NAME))
     }), http, options);

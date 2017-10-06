@@ -10,7 +10,6 @@ import { OAuthInterceptor } from '../auth/auth.service';
 import { SimplePagerComponent } from './components/simple-pager.component';
 import { SingleSearchComponent } from './components/single-search.component';
 import { customShowOnDirtyErrorStateMatcher } from './consts/form-validator';
-import { AdminGuard } from './guards/admin.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { StorageService } from './services/storage.service';
 
@@ -44,7 +43,6 @@ import { StorageService } from './services/storage.service';
     providers: [
         StorageService,
         AuthGuard,
-        AdminGuard,
         // Set global validate checker (errorStateMatcher)
         { provide: MD_ERROR_GLOBAL_OPTIONS, useValue: { errorStateMatcher: customShowOnDirtyErrorStateMatcher } },
         { provide: HTTP_INTERCEPTORS, useClass: OAuthInterceptor, multi: true }

@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from '../../auth/auth.service';
-import { UNAUTHORIZE_PATH } from '../consts/auth.const';
+import { LOGIN_SUCCESS_PATH, UNAUTHORIZE_PATH } from '../consts/auth.const';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -11,11 +11,11 @@ export class AuthGuard implements CanActivate {
     canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        // return this.auth.isLoggedIn();
         if (this.auth.isLoggedIn()) {
-            this.router.navigateByUrl(UNAUTHORIZE_PATH);
+            this.router.navigateByUrl(LOGIN_SUCCESS_PATH);
             return true;
         }
+        this.router.navigateByUrl(UNAUTHORIZE_PATH);
         return false;
     }
 }

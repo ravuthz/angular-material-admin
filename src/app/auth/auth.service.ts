@@ -20,7 +20,7 @@ import {
     TOKEN_AUTH_USERNAME,
     TOKEN_KEY,
 } from '../shared/consts/auth.const';
-import { GRANT_TYPE_CLIENT_CREDENTIALS, GRANT_TYPE_PASSWORD } from '../shared/consts/auth.const';
+import { GRANT_TYPE_CLIENT_CREDENTIALS } from '../shared/consts/auth.const';
 import { StorageService } from '../shared/services/storage.service';
 
 @Injectable()
@@ -68,35 +68,12 @@ export class AuthService {
             });
     }
 
-    public login(username: string, password: string, grant_type = GRANT_TYPE_PASSWORD) {
-        return this.httpLogin({ username, password, grant_type });
-    }
+    // public login(username: string, password: string, grant_type = GRANT_TYPE_PASSWORD) {
+    //     return this.httpLogin({ username, password, grant_type });
+    // }
 
-    public loginWithCleint(client_id, cleint_secret) {
-        return this.httpLogin({ client_id, cleint_secret, grant_type: GRANT_TYPE_CLIENT_CREDENTIALS });
-    }
-
-    public isLoggedIn(): boolean {
-        let token = this.getToken();
-        return token && token.length > 0;
-    }
-
-    public checkCredentials() {
-        if (!this.isLoggedIn()) {
-            this.router.navigateByUrl(LOGIN_PATH);
-        }
-    }
-
-    public isUser(): boolean {
-        return this.isLoggedIn();
-    }
-
-    public isAdmin(): boolean {
-        return this.isLoggedIn();
-    }
-
-    public getToken() {
-        return this.storage.get(TOKEN_KEY);
+    public login(data) {
+        return this.httpLogin(data);
     }
 
     public logout() {
@@ -108,6 +85,25 @@ export class AuthService {
     public register(user) {
         console.info("AuthService - register");
 
+    }
+
+    public loginWithCleint(client_id, cleint_secret) {
+        return this.httpLogin({ client_id, cleint_secret, grant_type: GRANT_TYPE_CLIENT_CREDENTIALS });
+    }
+
+    public getToken() {
+        return this.storage.get(TOKEN_KEY);
+    }
+
+    public checkCredentials() {
+        if (!this.isLoggedIn()) {
+            this.router.navigateByUrl(LOGIN_PATH);
+        }
+    }
+
+    public isLoggedIn() {
+        let token = this.getToken();
+        return token && token.length > 0;
     }
 
 }

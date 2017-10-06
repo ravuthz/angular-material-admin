@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../auth/auth.service';
 import { QueryParams } from '../classes/query-params';
 import { PagerRequest, SingleSearchRequest } from '../classes/requests-respones';
 
@@ -11,7 +12,7 @@ export class FetchService {
     private _link: string;
     private _searchLink: string;
 
-    constructor(public http: HttpClient) { }
+    constructor(public http: HttpClient, public auth: AuthService) { }
 
     set link(suffex) {
         this._link = environment.apiUrl + suffex;
@@ -31,7 +32,10 @@ export class FetchService {
 
     query(query) {
         let queryString = new QueryParams(query);
-        return this.http.get(this.link + queryString);
+        let headers = new HttpHeaders();
+        headers.set('Authorization', 'Bearer ' + this.auth.getToken());
+        console.log("headers ", headers.toString());
+        return this.http.get(this.link + queryString, { headers });
     }
 
     search(query) {
