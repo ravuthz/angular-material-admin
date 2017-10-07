@@ -1,3 +1,5 @@
+import { HttpHeaders, HttpParams } from '@angular/common/http';
+
 export const DEFAULT_PAGE = 0;
 export const DEFAULT_SIZE = 5;
 export const DEFAULT_SORT = 'id,asc';
@@ -7,6 +9,12 @@ export const DEFAULT_TOTAL_ELEMENTS = 0;
 /**
  * Request Classes
  */
+
+export interface JwtClient {
+    grant_type: string;
+    client_id: string;
+    client_password: string;
+}
 
 export class PagerRequest {
     constructor(
@@ -45,4 +53,22 @@ export class PagerResponse {
     ) { }
 }
 
+export function filterParams(data) {
+    let params = new HttpParams();
+    if (data) {
+        Object.keys(data).forEach(function (key) {
+            params = params.set(key, data[key]);
+        });
+    }
+    return params;
+}
 
+export function filterHeadears(data) {
+    let headers = new HttpHeaders();
+    if (data) {
+        Object.keys(data).forEach(function (key) {
+            headers = headers.set(key, data[key]);
+        });
+    }
+    return headers;
+}

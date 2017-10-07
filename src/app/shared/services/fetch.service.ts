@@ -1,46 +1,51 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { environment } from '../../../environments/environment';
 import { AuthService } from '../../auth/auth.service';
-import { QueryParams } from '../classes/query-params';
-import { PagerRequest, SingleSearchRequest } from '../classes/requests-respones';
+import { filterHeadears, filterParams, PagerRequest, SingleSearchRequest } from '../classes/requests-respones';
+import { TokenStoreService } from './token-store.service';
 
 @Injectable()
 export class FetchService {
 
-    private _link: string;
-    private _searchLink: string;
+    public link: string;
+    public searchLink: string;
+    public headers: HttpHeaders;
 
-    constructor(public http: HttpClient, public auth: AuthService) { }
-
-    set link(suffex) {
-        this._link = environment.apiUrl + suffex;
+    constructor(
+        public http: HttpClient,
+        public auth: AuthService,
+        public token: TokenStoreService) {
+        this.headers = new HttpHeaders();
     }
 
-    get link() {
-        return this._link;
+    public setHeaders(data) {
+        this.headers = filterHeadears(data);
     }
 
-    set searchLink(suffex) {
-        this._searchLink = environment.apiUrl + suffex;
+    public httpRequest(method: string, link: string, params?: Object, headers?: Object) {
+        let httpParams = new HttpParams();
+        let httpHeaders = new HttpHeaders();
+
+        if (params) {
+            httpParams = filterParams(params);
+        }
+
+        if (headers) {
+            httpHeaders = filterHeadears(headers);
+        } else {
+            httpHeaders = this.headers;
+        }
+
+        return this.http.request(method, link, { params: httpParams, headers: httpHeaders });
     }
 
-    get searchLink() {
-        return this._searchLink;
+    query(params) {
+        return this.httpRequest('get', this.link, params);
     }
 
-    query(query) {
-        let queryString = new QueryParams(query);
-        let headers = new HttpHeaders();
-        headers.set('Authorization', 'Bearer ' + this.auth.getToken());
-        console.log("headers ", headers.toString());
-        return this.http.get(this.link + queryString, { headers });
-    }
-
-    search(query) {
-        let queryString = new QueryParams(query);
-        return this.http.get(this.searchLink + queryString);
+    search(params) {
+        return this.httpRequest('get', this.searchLink, params);
     }
 
     /**
@@ -48,49 +53,49 @@ export class FetchService {
      */
 
     getByPage(page: number, size: number, sort: string) {
-        let data = { page, size, sort };
-        console.log("getByPage() data: ", data);
-        return this.query(data);
+        let params = { page, size, sort };
+        console.log("getByPage() data: ", params);
+        return this.query(params);
     }
 
-    getByPager(request: PagerRequest) {
-        console.log("getByPager() request: ", request);
-        return this.query(request);
+    getByPager(params: PagerRequest) {
+        console.log("getByPager() request: ", params);
+        return this.query(params);
     }
 
     searchByPage(keyword: string, page: number, size: number, sort: string) {
-        let data = { keyword, page, size, sort };
-        console.log("searchByPage() data: ", data);
-        return this.search(data);
+        let params = { keyword, page, size, sort };
+        console.log("searchByPage() data: ", params);
+        return this.search(params);
     }
 
-    searchByPager(request: SingleSearchRequest) {
-        console.log("searchByPager() request: ", request);
-        return this.search(request);
+    searchByPager(params: SingleSearchRequest) {
+        console.log("searchByPager() request: ", params);
+        return this.search(params);
     }
 
     /**
      * CRUD Functions
      */
 
-    getAll(data = {}) {
-        return this.query(data);
+    getAll(params = {}) {
+        return this.query({ params });
     }
 
     getById(id) {
-        return this.http.get(this.link + '/' + id);
+        return this.httpRequest('get', this.link + '/' + id);
     }
 
     create(data) {
-        return this.http.post(this.link, data);
+        return this.httpRequest('post', this.link, data);
     }
 
     deleteById(id) {
-        return this.http.delete(this.link + '/' + id);
+        return this.httpRequest('delete', this.link + '/' + id);
     }
 
     updateById(id, data) {
-        return this.http.put(this.link + '/' + id, data);
+        return this.httpRequest('put', this.link + '/' + id, data);
     }
 
 }

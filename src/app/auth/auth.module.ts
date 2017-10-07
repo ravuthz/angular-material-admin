@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { Http, RequestOptions } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import { AuthConfig, AuthHttp } from 'angular2-jwt';
 
 import { SharedModule } from '../shared/shared.module';
 import { LoginComponent } from './login/login.component';
@@ -26,16 +24,6 @@ export const routerConfig = [
     }
 ];
 
-export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-    return new AuthHttp(new AuthConfig({
-        tokenName: TOKEN_NAME,
-        globalHeaders: [{ 'Content-Type': 'application/json' }],
-        noJwtError: true,
-        noTokenScheme: true,
-        tokenGetter: (() => localStorage.getItem(TOKEN_NAME))
-    }), http, options);
-}
-
 @NgModule({
     imports: [
         CommonModule,
@@ -49,13 +37,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         LoginComponent,
         LogoutComponent,
         RegisterComponent
-    ],
-    providers: [
-        {
-            provide: AuthHttp,
-            useFactory: authHttpServiceFactory,
-            deps: [Http, RequestOptions]
-        }
     ]
 })
 export class AuthModule { }

@@ -23,5 +23,9 @@ import { UsersComponent } from './users/users.component';
         UserFormComponent,
         UserShowComponent
     ],
+    providers: [
+        // oAuthInterceptorProvider
+        // { provide: HTTP_INTERCEPTORS, useClass: OAuthInterceptor, multi: true }
+    ]
 })
 export class UsersModule { }
