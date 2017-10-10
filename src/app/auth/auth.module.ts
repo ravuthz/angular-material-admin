@@ -11,6 +11,11 @@ export const TOKEN_NAME = 'token';
 
 export const routerConfig = [
     {
+        path: '',
+        component: LoginComponent,
+        pathMatch: 'full'
+    },
+    {
         path: 'login',
         component: LoginComponent
     },
@@ -21,6 +26,10 @@ export const routerConfig = [
     {
         path: 'register',
         component: RegisterComponent
+    },
+    {
+        path: '**',
+        component: LoginComponent
     }
 ];
 

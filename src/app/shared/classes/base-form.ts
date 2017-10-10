@@ -22,7 +22,13 @@ export abstract class BaseForm {
 
     public abstract onFormSave();
 
-    public abstract onFormReset();
+    public onFormReset() {
+        this.form.reset();
+    }
+
+    public onFormSubmit() {
+
+    }
 
     public abstract initFormControl();
 

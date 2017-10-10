@@ -10,7 +10,7 @@ export class FetchService {
 
     public link: string;
     public searchLink: string;
-    public headers: HttpHeaders;
+    private headers: HttpHeaders;
 
     constructor(
         public http: HttpClient,

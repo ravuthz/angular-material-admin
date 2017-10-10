@@ -61,10 +61,6 @@ export class UserFormComponent extends BaseForm implements OnInit {
         }
     }
 
-    public onFormReset() {
-        this.form.reset();
-    }
-
     public onFormCancel() {
         this.form.reset();
         this.dialog.close();

@@ -4,8 +4,9 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MaterialModule, MD_ERROR_GLOBAL_OPTIONS, MdDialogModule } from '@angular/material';
+import { MaterialModule, MD_ERROR_GLOBAL_OPTIONS, MdCardModule, MdDialogModule } from '@angular/material';
 
+import { InputErrorComponent } from './components/input-error.component';
 import { SimplePagerComponent } from './components/simple-pager.component';
 import { SingleSearchComponent } from './components/single-search.component';
 import { customShowOnDirtyErrorStateMatcher } from './consts/form-validator';
@@ -31,6 +32,7 @@ import { TokenStoreService } from './services/token-store.service';
         HttpClientModule,
         MaterialModule,
         MdDialogModule,
+        MdCardModule,
         FormsModule,
         ReactiveFormsModule,
         SimplePagerComponent,
@@ -38,7 +40,8 @@ import { TokenStoreService } from './services/token-store.service';
     ],
     declarations: [
         SimplePagerComponent,
-        SingleSearchComponent
+        SingleSearchComponent,
+        InputErrorComponent
     ],
     providers: [
         AuthGuard,

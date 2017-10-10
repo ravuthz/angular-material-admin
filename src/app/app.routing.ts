@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { P401Component } from './errors/p401/p401.component';
+import { P404Component } from './errors/p404/p404.component';
 import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
 import { PageLayoutComponent } from './layout/page-layout/page-layout.component';
 import { AuthGuard } from './shared/guards/auth.guard';
@@ -10,7 +11,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'users',
+        redirectTo: 'login',
         pathMatch: 'full'
     },
     {
@@ -29,14 +30,18 @@ const routes: Routes = [
         component: PageLayoutComponent,
         children: [
             {
-                path: 'auth',
+                path: '',
                 loadChildren: './auth/auth.module#AuthModule'
             }
         ]
     },
     {
+        path: 'unauthorize',
+        component: P401Component
+    },
+    {
         path: '**',
-        component: NotFoundComponent
+        component: P404Component
     }
 ];
 @NgModule({

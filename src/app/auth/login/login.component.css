@@ -1,0 +1,19 @@
+/* .login-form-container {
+    width: 500px;
+    margin: 0 auto;
+} */
+
+app-login {
+    color: #FAFAFA;
+    background-color: #1E88E5;
+}
+
+md-card {
+    margin: 50px auto;
+    height: 360px;
+}
+
+.login-card {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
