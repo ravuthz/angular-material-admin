@@ -13,24 +13,20 @@
     <md-list-item *ngFor="let user of users">
         <img mdListAvatar src="assets/images/profile-pictures.png" alt="profile-pictures.png">
         <h3 mdLine>
-            <a [routerLink]="['/users', user.id]">{{ user.username | uppercase }}</a>
+            <a [routerLink]="['/admin/users', user.id]">{{ user.username }}</a>
         </h3>
-        <div mdLine flexLayout="row">
-            <div fxFlex="90">
-                <span> {{ user.firstName + ' ' + user.lastName }} </span>
-                <span> -- {{ user.email }} </span>
-            </div>
-            <div fxFlex class="text-right">
-                <button md-icon-button color="primary" (click)="onModifyClick(user)">
-                    <md-icon>create</md-icon>
-                </button>
-                <button md-icon-button color="accent" (click)="onDeleteClick(user)">
-                    <md-icon>delete</md-icon>
-                </button>
-            </div>
+        <div mdLine>
+            <span> {{ user.firstName + ' ' + user.lastName }} </span>
+            <span> -- {{ user.email }} </span>
+        </div>
+        <div mdLine>
+            <button md-button md-icon-button color="primary" (click)="onModifyClick(user)">
+                <md-icon>create</md-icon>
+            </button>
+            <button md-button md-icon-button color="accent" (click)="onDeleteClick(user)">
+                <md-icon>delete</md-icon>
+            </button>
         </div>
     </md-list-item>
-
     <app-simple-pager [pager]="pager" (onPageChange)="onPageChange($event)"></app-simple-pager>
-
 </md-list>

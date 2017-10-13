@@ -2,16 +2,12 @@
     <button md-icon-button (click)="myMenuClick()">
         <md-icon>menu</md-icon>
     </button>
-    <span>MyCompany</span>
+    <span>{{ title }}</span>
     <span class="toolbar-spacer"></span>
     <button md-button [mdMenuTriggerFor]="appMenu"><md-icon>menu</md-icon> Menu</button>
 </md-toolbar>
 
 <md-menu #appMenu="mdMenu">
-    <button md-menu-item disabled>
-        <md-icon>fingerprint</md-icon>
-        <span>Login</span>
-    </button>
     <button md-menu-item>
         <md-icon>announcement</md-icon>
         <span>Issues</span>
@@ -20,4 +16,12 @@
         <md-icon>notifications_off</md-icon>
         <span>Disable alerts</span>
     </button>
+    <button md-menu-item>
+        <md-icon>fingerprint</md-icon>
+        <span>Logout</span>
+    </button>
+    <a md-menu-item routerLink="/logout">
+        <md-icon>fingerprint</md-icon>
+        <span>Logout</span>
+    </a>
 </md-menu>

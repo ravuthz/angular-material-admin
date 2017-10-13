@@ -14,24 +14,7 @@
     font-size: 20px;
 }
 
-.mat-table {
-    overflow: auto;
-    max-height: 500px;
-}
-
-.mat-header-cell .mat-sort-header-sorted {
-    color: black;
-}
-
 md-list-item {
-    margin-bottom: 15px;
-    border: 1px solid darkgray;
-}
-
-.button-row {
     margin-bottom: 10px;
+    border: 1px solid lightgray;
 }
-
-.list-row {}
-
-.list-btn-row {}

@@ -13,6 +13,14 @@ md-card {
     height: 360px;
 }
 
+.login-container {
+    margin-top: 70px;
+}
+
+.form-field {
+    padding-top: 20px;
+}
+
 .login-card {
     padding-top: 25px;
     padding-bottom: 25px;

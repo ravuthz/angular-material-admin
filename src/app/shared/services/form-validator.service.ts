@@ -30,8 +30,21 @@ export class FormValidatorService {
         return messages.join(' ');
     }
 
-    add(key, validation, value = '') {
-        let validates = this.errorMessage.getValidates(validation);
+    addFields(items: Array<string>) {
+        let length = items.length;
+        if (length > 0) {
+            for (let item, i = 0; item = items[i]; i++) {
+                this.controls[item] = [''];
+            }
+        }
+        return this;
+    }
+
+    addField(key, validation = '', value = '') {
+        let validates = [];
+        if (validation) {
+            validates = this.errorMessage.getValidates(validation);
+        }
         this.controls[key] = [value, validates];
         return this;
     }

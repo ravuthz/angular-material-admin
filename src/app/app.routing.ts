@@ -11,20 +11,27 @@ import { AuthGuard } from './shared/guards/auth.guard';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'login',
+        redirectTo: '/login',
         pathMatch: 'full'
     },
+    /* Admin or Dashboard's Page Routing Modules */
     {
-        path: '',
+        path: 'admin',
         component: ContentLayoutComponent,
         children: [
             {
+                path: '',
+                loadChildren: './admin/admin.module#AdminModule',
+                canActivate: [AuthGuard]
+            },
+            {
                 path: 'users',
-                loadChildren: './users/users.module#UsersModule'
+                loadChildren: './users/users.module#UsersModule',
+                canActivate: [AuthGuard]
             }
         ]
-        , canActivate: [AuthGuard]
     },
+    /* Authenication's Page Routing Modules */
     {
         path: '',
         component: PageLayoutComponent,
@@ -35,6 +42,7 @@ const routes: Routes = [
             }
         ]
     },
+    /* Error's Pages Routing Component */
     {
         path: 'unauthorize',
         component: P401Component

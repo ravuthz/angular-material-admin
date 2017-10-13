@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
 import { AuthModule } from './auth/auth.module';
 import { AuthService } from './auth/auth.service';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { P401Component } from './errors/p401/p401.component';
 import { P404Component } from './errors/p404/p404.component';
 import { P500Component } from './errors/p500/p500.component';
@@ -24,7 +23,6 @@ import { UsersModule } from './users/users.module';
     declarations: [
         AppComponent,
         MenubarComponent,
-        DashboardComponent,
         PageLayoutComponent,
         ContentLayoutComponent,
         P404Component,

@@ -1,0 +1,37 @@
+<form class="user-form" [formGroup]="form" (submit)="onFormSubmit()" novalidate>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+        <div fxFlex>
+            <md-form-field>
+                <input mdInput placeholder="Email" formControlName="email">
+            </md-form-field>
+        </div>
+        <div fxFlex>
+            <md-form-field>
+                <input mdInput placeholder="Username" formControlName="username">
+            </md-form-field>
+        </div>
+        <div fxFlex>
+        </div>
+    </div>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+        <div fxFlex>
+            <md-form-field>
+                <input mdInput placeholder="First Name" formControlName="firstName">
+            </md-form-field>
+        </div>
+        <div fxFlex>
+            <md-form-field>
+                <input mdInput placeholder="Last Name" formControlName="lastName">
+            </md-form-field>
+        </div>
+        <div fxFlex></div>
+    </div>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
+        <button fxFlex="12" fxFlex.md="22" fxFlex.sm="50" md-raised-button type="reset" (click)="formReset">Reset</button>
+        <button fxFlex="12" fxFlex.md="22" fxFlex.sm="50" md-raised-button color="primary" type="submit">Search</button>
+    </div>
+
+</form>

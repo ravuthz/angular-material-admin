@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { UserSearchComponent } from './user-search/user-search.component';
 import { UserShowComponent } from './user-show/user-show.component';
 import { UserRoutingModule } from './users.routing';
 import { UsersComponent } from './users/users.component';
@@ -21,7 +22,8 @@ import { UsersComponent } from './users/users.component';
         UsersComponent,
         UserListComponent,
         UserFormComponent,
-        UserShowComponent
+        UserShowComponent,
+        UserSearchComponent
     ],
     providers: [
         // oAuthInterceptorProvider

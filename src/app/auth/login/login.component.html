@@ -1,6 +1,6 @@
-<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="center center">
-    <div fxFlex></div>
-    <div fxFlex>
+<div class="login-container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="center center">
+    <!-- <div fxFlex></div> -->
+    <div fxFlex.lg="30" fxFlex.md="40" fxFlex.sm="70" fxFlex.xs="100">
         <md-card class="login-card">
             <md-card-header>
                 <md-card-title>
@@ -9,20 +9,25 @@
             </md-card-header>
             <md-card-content>
                 <form class="login-form" novalidate [formGroup]="form" (submit)="formSubmit($event)">
-                    <md-form-field class="input-full-width">
-                        <input mdInput placeholder="Username" formControlName="username">
-                        <md-error>{{ controlGetError('username') }}</md-error>
-                    </md-form-field>
-                    <md-form-field class="input-full-width">
-                        <input mdInput placeholder="Password" formControlName="password">
-                        <md-error>{{ controlGetError('password') }}</md-error>
-                    </md-form-field>
-
-                    <button md-raised-button type="reset" (click)="formReset">Reset</button>
-                    <button md-raised-button color="primary" type="submit">Login</button>
+                    <div class="form-field">
+                        <md-form-field class="input-full-width">
+                            <input mdInput placeholder="Username" formControlName="username">
+                            <md-error>{{ controlGetError('username') }}</md-error>
+                        </md-form-field>
+                    </div>
+                    <div class="form-field">
+                        <md-form-field class="input-full-width">
+                            <input mdInput type="password" placeholder="Password" formControlName="password">
+                            <md-error>{{ controlGetError('password') }}</md-error>
+                        </md-form-field>
+                    </div>
+                    <div class="form-field">
+                        <button md-raised-button type="reset" (click)="formReset">Reset</button>
+                        <button md-raised-button color="primary" type="submit">Login</button>
+                    </div>
                 </form>
             </md-card-content>
         </md-card>
     </div>
-    <div fxFlex></div>
+    <!-- <div fxFlex></div> -->
 </div>

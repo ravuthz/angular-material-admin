@@ -45,6 +45,8 @@ export class FetchService {
     }
 
     search(params) {
+        console.log("search link: ", this.searchLink);
+        console.log("search params: ", params);
         return this.httpRequest('get', this.searchLink, params);
     }
 

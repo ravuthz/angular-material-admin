@@ -10,5 +10,7 @@ export const environment = {
     production: false,
     appUrl: baseUrl,
     apiUrl: baseUrl + '/rest/api',
-    oauthUrl: baseUrl + '/oauth/token'
+    oauthUrl: baseUrl + '/oauth/token',
+
+    appTitle: 'User Manager'
 };

@@ -29,8 +29,8 @@ export class LoginComponent implements OnInit {
 
     createForm() {
         this.form = this.formValidator
-            .add('username', 'required|minlength:6|maxlength:50', '')
-            .add('password', 'required|minlength:6|maxlength:50', '')
+            .addField('username', 'required|minlength:6|maxlength:50', 'adminz')
+            .addField('password', 'required|minlength:6|maxlength:50', '123123')
             .build();
     }
 
@@ -53,13 +53,10 @@ export class LoginComponent implements OnInit {
             const control = this.form.get(field).markAsTouched({ onlySelf: true });
         });
 
-        let valid = this.formValidator.validate();
-        console.log('valid : ', valid);
+        if (this.form.valid) {
+            this.authService.login(this.form.value);
+        }
 
-        console.log("this form: ", this.form.valid, this.form.value, this.form.controls.errors);
-        console.log("this errors: ", this.form.errors);
-
-        // this.authService.login(model);
     }
 
     formReset() {

@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContentLayoutComponent implements OnInit {
 
+    showSidebar = false;
+
     constructor() { }
 
     ngOnInit() {

@@ -4,7 +4,15 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MaterialModule, MD_ERROR_GLOBAL_OPTIONS, MdCardModule, MdDialogModule } from '@angular/material';
+import {
+    MaterialModule,
+    MD_ERROR_GLOBAL_OPTIONS,
+    MdCardModule,
+    MdChipsModule,
+    MdDialogModule,
+    MdSidenavModule,
+    MdToolbarModule,
+} from '@angular/material';
 
 import { InputErrorComponent } from './components/input-error.component';
 import { SimplePagerComponent } from './components/simple-pager.component';
@@ -30,9 +38,16 @@ import { TokenStoreService } from './services/token-store.service';
         CommonModule,
         FlexLayoutModule,
         HttpClientModule,
+
+
         MaterialModule,
         MdDialogModule,
+
+        MdChipsModule,
         MdCardModule,
+        MdToolbarModule,
+        MdSidenavModule,
+
         FormsModule,
         ReactiveFormsModule,
         SimplePagerComponent,
